@@ -1,0 +1,52 @@
+#version 330 core
+out vec4 FragColor;
+
+in vec2 TexCoord;
+
+// texture samplers
+uniform sampler3D texture1;
+uniform vec3 camPos;
+uniform vec3 X;
+uniform vec3 Y;
+uniform vec3 Z;
+
+
+vec3 shading(vec3 cameraPosition, vec3 rd) {
+
+     vec3 ld = normalize(vec3(-1, 0, 0));
+    
+    const float nbStep = 100., diam = 2., rayLength = diam / nbStep;
+    float start = length(cameraPosition) - diam / 2., end = start + diam;
+    float sumDen = 0., sumDif = 0.;
+    
+    for(float d = end; d > start; d -= rayLength) { // raymarching
+        vec3 p = cameraPosition + d * rd;
+    	if(dot(p,p) > diam * diam) break;
+        float den = texture(texture1,p).r;
+        sumDen += den;
+        sumDif += max(0., den - texture(texture1,p + ld * .17).r);
+    }
+
+    const vec3 lightCol = vec3(1., 1., 1.);
+    float light = 10. * pow(max(0., dot(rd, ld)), 5.);
+    vec3 col = .01 * light * lightCol;
+    col +=  .4 * sumDen * rayLength * vec3(.8, .9, 1.); // ambient
+    col += 1.3 * sumDif * rayLength * lightCol;         // diffuse
+	return col;
+}
+
+
+
+//https://www.shadertoy.com/view/4sfSz4
+//https://www.shadertoy.com/view/WlfXzX
+void main()
+{
+ 	vec2 reso=vec2(1200,900);
+	vec3 nearcoord=vec3(2.*gl_FragCoord.xy/reso.xy-1.,0);
+    	nearcoord.x *= reso.x / reso.y;
+	vec3 direction = normalize(X*nearcoord.x + Y*nearcoord.y - Z);
+
+
+
+	FragColor =  vec4(shading(camPos,direction), 1.0);
+}

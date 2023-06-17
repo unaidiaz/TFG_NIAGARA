@@ -1,0 +1,22 @@
+﻿imgui_gradient.lib(GradientWidget.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in Emitter.obj
+imgui_gradient.lib(GradientWidget.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in Emitter.obj
+imgui_gradient.lib(RelativePosition.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in Emitter.obj
+imgui_gradient.lib(RelativePosition.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in Emitter.obj
+imgui_gradient.lib(Gradient.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in Emitter.obj
+imgui_gradient.lib(Gradient.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in Emitter.obj
+imgui_gradient.lib(HoverChecker.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in Emitter.obj
+imgui_gradient.lib(HoverChecker.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in Emitter.obj
+imgui_gradient.lib(button_disabled.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in Emitter.obj
+imgui_gradient.lib(button_disabled.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in Emitter.obj
+imgui_gradient.lib(imgui_draw.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in Emitter.obj
+imgui_gradient.lib(imgui_draw.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in Emitter.obj
+LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
+imgui_gradient.lib(GradientWidget.obj) : error LNK2001: unresolved external symbol __imp__invalid_parameter
+imgui_gradient.lib(Gradient.obj) : error LNK2001: unresolved external symbol __imp__invalid_parameter
+imgui_gradient.lib(button_disabled.obj) : error LNK2001: unresolved external symbol __imp__invalid_parameter
+imgui_gradient.lib(imgui_draw.obj) : error LNK2001: unresolved external symbol __imp__invalid_parameter
+imgui_gradient.lib(GradientWidget.obj) : error LNK2001: unresolved external symbol __imp__CrtDbgReport
+imgui_gradient.lib(Gradient.obj) : error LNK2001: unresolved external symbol __imp__CrtDbgReport
+imgui_gradient.lib(button_disabled.obj) : error LNK2001: unresolved external symbol __imp__CrtDbgReport
+imgui_gradient.lib(imgui_draw.obj) : error LNK2001: unresolved external symbol __imp__CrtDbgReport
+C:\Users\unai\Desktop\TFG\Prueba_2\x64\Release\Prueba_2.exe : fatal error LNK1120: 2 unresolved externals

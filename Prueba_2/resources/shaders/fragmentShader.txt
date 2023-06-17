@@ -1,0 +1,14 @@
+#version 330 core
+out vec4 FragColor;
+
+in vec2 newTextCoord;
+in vec2 outTextCoord;
+uniform vec4 Color;
+uniform sampler2D texture1;
+layout(depth_less) out float gl_FragDepth;
+void main()
+{ 
+  FragColor = texture(texture1, newTextCoord) * Color;
+
+
+}

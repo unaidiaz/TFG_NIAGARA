@@ -1,0 +1,23 @@
+#version 330
+
+layout (points) in;
+layout (points, max_vertices = 3) out;
+in vec2 newTextCoord[];
+out vec2 outTextCoord;
+void main() {
+ for (int i = 0; i < 4; i++) {
+    gl_Position = gl_in[i].gl_Position;
+    outTextCoord = newTextCoord[i];
+  }
+  vec4 newPoint1 = vec4(5.0, 5.0, 0.0, 1.0);
+  vec4 newPoint2 = vec4(4.0, 4.0, 0.0, 1.0);
+  
+  
+  gl_Position = newPoint1;
+  EmitVertex();
+  EndPrimitive();
+  
+  gl_Position = newPoint2;
+  EmitVertex();
+  EndPrimitive();
+}

@@ -1,0 +1,52 @@
+#version 330 core
+layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec2 aTexCoord;
+layout (location = 2) in vec4 color;
+layout(location = 3) in mat4 aInstanceMatrix;
+out vec2 TexCoord;
+out vec4 Color;
+uniform vec2 resolution;
+out vec2 res;
+uniform mat4 view;
+uniform mat4 projection;
+mat4 myModelView;
+void main()
+{
+
+mat4 scaleMatrix = mat4(
+        vec4(0.5, 0.0, 0.0, 0.0),
+        vec4(0.0, 0.5, 0.0, 0.0),
+        vec4(0.0, 0.0, 0.5, 0.0),
+        vec4(0.0, 0.0, 0.0, 1.0)
+    );
+
+    // Cálculo de la matriz de rotación
+    mat4 rotationMatrix = mat4(
+        vec4(1.0, 0.0, 0.0, 0.0),
+        vec4(0.0, 1.0, 0.0, 0.0),
+        vec4(0.0, 0.0, 1.0, 0.0),
+        vec4(0.0, 0.0, 0.0, 1.0)
+    );
+
+    // Cálculo de la matriz de traducción
+    mat4 translationMatrix = mat4(
+        vec4(color.x, 0.0, 0.0, 0.0),
+        vec4(0.0, color.y, 0.0, 0.0),
+        vec4(0.0, 0.0, color.z, 0.0),
+        vec4(color.x,color.y,color.z, 1.0)
+    );
+
+    // Combinar las matrices de transformación
+    mat4 aInstanceMatrixx = scaleMatrix * rotationMatrix * translationMatrix;
+
+    
+    
+
+
+      TexCoord=aTexCoord;
+	myModelView=view;
+      res=resolution;
+
+   Color = vec4(1);
+   gl_Position = projection *view* aInstanceMatrix *vec4(aPos, 1.0);
+}

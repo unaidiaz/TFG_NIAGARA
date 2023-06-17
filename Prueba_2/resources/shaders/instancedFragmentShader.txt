@@ -1,0 +1,29 @@
+#version 330 core
+out vec4 FragColor;
+in vec2 TexCoord;
+in vec4 Color;
+uniform sampler2D texture1;
+layout(depth_less) out float gl_FragDepth;
+in vec2 res;
+vec2 uv;
+
+const float offset = 1.0 / 300.0;
+void main()
+{
+
+
+
+
+    uv.x =TexCoord.x;
+	uv.y =TexCoord.y;
+    vec2 p =vec2(0.5)-uv;
+    float rad=length(p);
+    float angulo=atan(p.x,p.y);
+    float e=1-rad;
+    float r=e;
+    float g=e;
+    float b=e;
+    FragColor = vec4(1,1,1,Color.a);
+
+
+}
