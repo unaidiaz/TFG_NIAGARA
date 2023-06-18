@@ -152,11 +152,7 @@ bool FluidCube::PreUpdate(float DT, int a) {
 bool FluidCube::Update(int a)
 {
     
-    if (state == simulationState::CACHING && (a == INTERNAL_MODE)) {
-        FluidCubeStep();
-        return true;
-    }
-    else if ((state == simulationState::LOADING)) {
+    if ((state == simulationState::LOADING)) {
         return true;
     }
     FluidCubeStep();
@@ -164,14 +160,11 @@ bool FluidCube::Update(int a)
 }
 bool FluidCube::PostUpdate(int a)
 {
-    if (state == simulationState::CACHING && (a == EXTERNAL_MODE)) {
-        return true;
-    }
-    else if (state == simulationState::CACHING && (a == INTERNAL_MODE)) {
-
+    if (state == simulationState::CACHING ) {
         saveCachedFile();
-        return true;
+        
     }
+    
     else if (state == simulationState::LOADING) {
         loadCachedFile();
     }
@@ -228,9 +221,7 @@ void FluidCube::FluidCubeStep()
     float* Vz0 = this->Vz0;
     float* s = this->s;
 
-    if (state == simulationState::CACHING) {
-        dt = realFramerate;
-    }
+    
     diffuse(1, Vx0, Vx, visc, dt, 1, N);
     diffuse(2, Vy0, Vy, visc, dt, 1, N);
     diffuse(3, Vz0, Vz, visc, dt, 1, N);
@@ -482,8 +473,9 @@ void FluidCube::cachOptionWindow() {
             state = simulationState::CACHING;
             realFramerate = 1 / framerate;
             bufferToStore = new float[size * size * size];
-            std::thread th3(cacheate, this);
-            th3.join();
+            //cacheate(this);
+            //std::thread th3(cacheate, this);
+            //th3.join();
 
         }
     }
