@@ -56,3 +56,38 @@ Muestra información y opciones en relación a las físicas y colisiones de las 
 En el siguiente ejemplo se muestra un resultado simulando humo.
 
 ![resultado humo1](Capturas/humo1.png)
+
+## Sistema de partículas complejo (2):
+
+Este sistema de partículas está más enfocado a conseguir resultados lo más realistas posible, tanto por la parte de la simulación en sí y el comportamiento técnicamente realista del humo como por la parte visual del mismo, utilizando técnicas de renderizado como el ray tracing. 
+
+### Controles:
+
+WASD: Para moverte por la escena.
+Clic derecho: Para girar la cámara.
+Espacio: Para añadir densidad.
+
+### Opciones:
+
+Para este caso las opciones de personalización son más limitadas
+
+![opciones sistema1](Capturas/menuSistema2.png)
+
+* cacheate simulation:
+Opción para guardar la simulación en archivos externos
+
+* Framerate:
+Muestra información del rendimiento general de la aplicación.
+
+* Smoke Diffusion:
+Muestra información y opciones en relación con la capacidad de difusión del humo, pudiendo modificarlo para alterar el comportamiento del humo.
+
+* Smoke Viscosity:
+Muestra información y opciones en relación a la viscosidad del humo, pudiendo modificarlo para alterar el comportamiento del humo.
+
+### Posibles resultados:
+
+En el siguiente ejemplo se muestra un resultado simulando humo.
+
+![resultado humo2-1](Capturas/humo2-1.png)
+![resultado humo2-2](Capturas/humo2-2.png)
