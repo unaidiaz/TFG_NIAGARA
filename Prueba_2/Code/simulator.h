@@ -81,7 +81,7 @@ public:
     int startFrameToCach = 0;
     int endFrameToCach = 100;
     void progressionBar();
-    
+    int LoadedID = 0;
     /// 
     /// 
     /// 

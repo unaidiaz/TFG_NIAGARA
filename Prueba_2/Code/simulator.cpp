@@ -151,7 +151,9 @@ bool FluidCube::PreUpdate(float DT, int a) {
 
 bool FluidCube::Update(int a)
 {
-    if (state == simulationState::CACHING && (a == EXTERNAL_MODE)) {
+    
+    if (state == simulationState::CACHING && (a == INTERNAL_MODE)) {
+        FluidCubeStep();
         return true;
     }
     else if ((state == simulationState::LOADING)) {
@@ -225,7 +227,6 @@ void FluidCube::FluidCubeStep()
     float* Vy0 = this->Vy0;
     float* Vz0 = this->Vz0;
     float* s = this->s;
-    float* density = this->density;
 
     if (state == simulationState::CACHING) {
         dt = realFramerate;
@@ -505,33 +506,44 @@ void FluidCube::cachOptionWindow() {
 }
 void FluidCube::saveCachedFile()
 {
-    FILE* file;
-    std::string finalPath;
-    finalPath = cachPath + "_" + std::to_string(actualCachingFrame) + ".unai";
-    OpenFile(finalPath.c_str(), "w+", &file);
 
-    for (int q = 0; q < size * size * size; q++) {
+    std::ofstream archivo(cachPath + "_" + std::to_string(actualCachingFrame), std::ios::binary);
 
-        bufferToStore[q] = density[q] * 0.00392156;
-    }
-    WriteOpenedFile(file, bufferToStore, size * size * size * sizeof(float));
-    CloseFile(file);
+    size_t tamanoArray = size * size * size;
+    archivo.write(reinterpret_cast<const char*>(&tamanoArray), sizeof(tamanoArray));
+
+
+    archivo.write(reinterpret_cast<const char*>(&density[0]), tamanoArray * sizeof(float));
+
+    archivo.close();
+
     actualCachingFrame++;
 }
 void FluidCube::loadCachedFile()
 {
-    FILE* file;
-    std::string finalPath;
-    finalPath = loadPath;
-    OpenFile(finalPath.c_str(), "r+", &file);
-
-    
-    ReadOpenedFile(file, bufferToStore, size * size * size * sizeof(float));
-    for (int q = 0; q < size * size * size; q++) {
-
-        density[q] = bufferToStore[q];
+    size_t indiceGuionBajo = loadPath.find('_');
+    std::string hh;
+    if (indiceGuionBajo != std::string::npos) {
+        hh=loadPath.substr(0, indiceGuionBajo);
+        
+        hh = hh + '_'+std::to_string(LoadedID);
     }
-    CloseFile(file);
+
+    std::ifstream archivo(hh, std::ios::binary);
+    if (!archivo) {
+        LoadedID = 0;
+        return;
+    }
+    size_t tamanoArray;
+    archivo.read(reinterpret_cast<char*>(&tamanoArray), sizeof(tamanoArray));
+
+
+
+    archivo.read(reinterpret_cast<char*>(&density[0]), tamanoArray * sizeof(float));
+
+    archivo.close();
+    LoadedID++;
+
 }
 void bufferToString(const float* buffer, int bufferSize, char* outputString, int maxStringLength) {
     for (int i = 0; i < bufferSize; i++) {
