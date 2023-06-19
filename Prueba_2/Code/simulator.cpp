@@ -152,7 +152,7 @@ bool FluidCube::PreUpdate(float DT, int a) {
 bool FluidCube::Update(int a)
 {
     
-    if ((state == simulationState::LOADING)) {
+    if (state == simulationState::LOADING) {
         return true;
     }
     FluidCubeStep();
@@ -194,8 +194,12 @@ bool FluidCube::PostUpdate(int a)
 }
 void FluidCube::FluidCubeAddDensity(int x, int y, int z, float amount)
 {
-    int N = size;
-    density[IX(x, y, z)] += amount;
+    if (state != simulationState::LOADING) 
+    {
+        int N = size;
+        density[IX(x, y, z)] += amount;
+    }
+    
 }
 
 void FluidCube::FluidCubeAddVelocity(int x, int y, int z, float amountX, float amountY, float amountZ)
@@ -465,31 +469,57 @@ void FluidCube::cachOptionWindow() {
     ImGui::Begin("Simulation cache");
     ImGui::InputInt("Framerate:", &framerate);
 
+    if (state == simulationState::NORMAL_RUN) {
+        if (ImGui::Button("Save"))
+        {
+            if (state != simulationState::CACHING) {
+                cachPath = FindSaveFilePath("*unai");
+                state = simulationState::CACHING;
+                realFramerate = 1 / framerate;
+                bufferToStore = new float[size * size * size];
+                //cacheate(this);
+                //std::thread th3(cacheate, this);
+                //th3.join();
 
-    if (ImGui::Button("Save"))
-    {
-        if (state != simulationState::CACHING) {
-            cachPath = FindSaveFilePath("*unai");
-            state = simulationState::CACHING;
-            realFramerate = 1 / framerate;
-            bufferToStore = new float[size * size * size];
-            //cacheate(this);
-            //std::thread th3(cacheate, this);
-            //th3.join();
+            }
+        }
+        if (ImGui::Button("Load"))
+        {
+            if (state != simulationState::LOADING) {
+                loadPath = FindSaveFilePath("");
+                state = simulationState::LOADING;
+                realFramerate = 1 / framerate;
+                bufferToStore = new float[size * size * size];
 
+
+            }
         }
     }
-    if (ImGui::Button("Load"))
+    else if (state == simulationState::LOADING) 
     {
-        if (state != simulationState::LOADING) {
-            loadPath = FindSaveFilePath("");
-            state = simulationState::LOADING;
-            realFramerate = 1 / framerate;
-            bufferToStore = new float[size * size * size];
-
-
+        if (ImGui::Button("Exit Loading Mode"))
+        {
+            state = simulationState::NORMAL_RUN;
+            for (int i = 0; i < size*size * size; i++)
+            {
+                density[i] = 0;
+            }
+            LoadedID = 0;
         }
     }
+    else if (state == simulationState::CACHING)
+    {
+        ImGui::Text("saving path:");
+        ImGui::SameLine();
+        ImGui::Text(loadPath.c_str());
+        ImGui::Text("frames cahed: %d", actualCachingFrame);
+        if (ImGui::Button("Stop caching"))
+        {
+            actualCachingFrame = 0;
+            state = simulationState::NORMAL_RUN;
+        }
+    }
+    
     progressionBar();
 
 
