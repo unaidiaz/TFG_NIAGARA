@@ -23,6 +23,7 @@ enum class spawnForms {
 };
 class Emitter {
 public:
+    bool exit = false;
     Emitter();
     ~Emitter();
     void PreUpdate(float dt);

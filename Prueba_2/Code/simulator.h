@@ -19,6 +19,8 @@ enum class simulationState {
 };
 class FluidCube {
 public:
+    ~FluidCube();
+    bool exit = false;
     bool PreUpdate(float dt,int a);
     bool Update(int a);
     void FluidCubeCreate(int size, float diffusion, float viscosity, float dt);

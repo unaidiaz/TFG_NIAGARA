@@ -14,6 +14,26 @@
 #include"imgui_impl_opengl3.h"
 
 #include"ProgressionBar.h"
+FluidCube::~FluidCube() {
+    /*glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
+    glDeleteBuffers(1, &VAO);*/
+    glDeleteTextures(1, &ext);
+    delete[] density;
+    delete[] s;
+    delete[] Vx;
+    delete[] Vy;
+    delete[] Vz;
+
+    delete[] Vx0;
+    delete[] Vy0;
+    delete[] Vz0;
+    delete[] vertices;
+    delete[] indices;
+    
+    delete ourShader;
+
+}
 void FluidCube::FluidCubeCreate(int size, float diffusion, float viscosity, float dt)
 {
 
@@ -128,8 +148,11 @@ bool FluidCube::PreUpdate(float DT, int a) {
 
 
 
-    ImGui::Begin("My name is window, ImGUI window");
-
+    ImGui::Begin("Realist particle sistem");
+    if (ImGui::Button("back"))
+    {
+        exit = true;
+    }
     if (ImGui::Button("cacheate simulation")) {
         showcachOptionWindow = true;
     }
@@ -468,7 +491,7 @@ void FluidCube::progressionBar() {
 void FluidCube::cachOptionWindow() {
     ImGui::Begin("Simulation cache");
     ImGui::InputInt("Framerate:", &framerate);
-
+   
     if (state == simulationState::NORMAL_RUN) {
         if (ImGui::Button("Save"))
         {

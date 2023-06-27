@@ -256,7 +256,7 @@ void loadSimple() {
 void chooseParticle()
 {
     if (!realist && !simple) {
-        ImGui::Begin("My name is window, ImGUI window");
+        ImGui::Begin("Choose the sistem");
 
         if (ImGui::Button("Realist Particle system"))
         {
@@ -277,7 +277,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-    window = glfwCreateWindow(WIDTH, HEIGHT, "LearnOpenGL", NULL, NULL);
+    window = glfwCreateWindow(WIDTH, HEIGHT, "TFG_NIAGARA", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -327,11 +327,20 @@ int main() {
             auxiliar->PreUpdate(DT);
             auxiliar->Update(DT);
             auxiliar->PostUpdate(DT);
+            if (auxiliar->exit) {
+                simple = false;
+                delete auxiliar;
+            }
         }
         else if (realist) {
+            
             cube->PreUpdate(DT, EXTERNAL_MODE);
             cube->Update(EXTERNAL_MODE);
             cube->PostUpdate(EXTERNAL_MODE);
+            if (cube->exit) {
+                realist = false;
+                delete cube;
+            }
         }
 
 

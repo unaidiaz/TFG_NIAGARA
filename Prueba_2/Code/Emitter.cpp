@@ -22,7 +22,6 @@ float Emitter::GetZeroOneConvertion(float actualValue, float maxValue)
 
 
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -314,6 +313,7 @@ Emitter::~Emitter()
 
         delete toDelete;
     }
+    delete textureAnimation;
     allParticles.clear();
     delete physicsModule;
     delete geometry;
@@ -352,6 +352,10 @@ void Emitter::OnEditor(float dt) {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     if (ImGui::CollapsingHeader("Application"))
     {
+        if (ImGui::Button("back"))
+        {
+            exit = true;
+        }
         static ImVector<float> fpsLog;
         char title[25];
         fpsLog.push_back(1 / dt);
